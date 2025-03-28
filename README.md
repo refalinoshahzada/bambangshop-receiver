@@ -59,14 +59,14 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   Open another new terminal, edit `ROCKET_PORT` in `.env` to `8003`, then execute `cargo run`.
 
 ## Mandatory Checklists (Subscriber)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
+-   [x] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create SubscriberRequest model struct.`
-    -   [ ] Commit: `Create Notification database and Notification repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Notification repository.`
-    -   [ ] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [x] Commit: `Create Notification model struct.`
+    -   [x] Commit: `Create SubscriberRequest model struct.`
+    -   [x] Commit: `Create Notification database and Notification repository struct skeleton.`
+    -   [x] Commit: `Implement add function in Notification repository.`
+    -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,33 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+
+1. **Why is `RwLock<>` necessary instead of `Mutex<>`?**  
+
+   In our receiver application, we use `RwLock<Vec<Notification>>` to synchronize access to the notification list. The key advantage of `RwLock<>` is that it allows multiple threads to read simultaneously while ensuring only one thread can write at a time. This makes it ideal for a scenario where reading occurs more frequently than writing.  
+
+   The reasons for choosing `RwLock<>` include:  
+   - It allows multiple concurrent readers, improving efficiency in read-heavy situations.  
+   - Readers are not blocked unless a write operation is in progress, reducing contention.  
+   - It ensures thread safety by preventing race conditions.  
+
+   On the other hand, `Mutex<>` is not as suitable because:  
+   - It only permits one thread to access the data at any time, even for reading.  
+   - Since reading is frequent, a `Mutex<>` would unnecessarily block multiple readers while a write operation is happening, decreasing performance.  
+
+   Given our application's workload, `RwLock<>` provides better performance and scalability than `Mutex<>`, as it minimizes unnecessary locking during read operations.  
+
+2. **Why doesn’t Rust allow mutation of static variables like Java?**  
+
+   In Java, static variables can be modified directly within static methods. However, Rust enforces stricter rules to maintain thread safety and prevent data races. Rust does not allow direct mutation of static variables because:  
+   - It ensures thread safety at compile time, reducing the risk of race conditions.  
+   - Allowing `static mut` could lead to unpredictable behavior in multi-threaded environments.  
+   - Unlike Java, which relies on a Garbage Collector (GC) for memory management, Rust enforces strict ownership and borrowing rules.  
+
+   Instead of directly mutating static variables, Rust provides safer alternatives, such as:  
+   - **Using `lazy_static!`**: This allows us to initialize and wrap global variables in synchronization primitives like `RwLock<>`, ensuring safe concurrent access.  
+   - **Using `DashMap`**: Unlike a `Vec`, `DashMap` is optimized for concurrent reads and writes, making it a good alternative for shared mutable state.  
+
+   In summary, Rust prioritizes memory safety and concurrency safety over convenience. Unlike Java, which permits direct mutation of static variables, Rust requires explicit synchronization mechanisms (`RwLock<>`, `Mutex<>`, `DashMap`, etc.) to ensure safe access to shared data.
 
 #### Reflection Subscriber-2
