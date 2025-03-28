@@ -67,17 +67,17 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement add function in Notification repository.`
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
--   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+-   **STAGE 2: Implement services and controllers**
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -115,3 +115,15 @@ This is the place for you to write reflections:
    In summary, Rust prioritizes memory safety and concurrency safety over convenience. Unlike Java, which permits direct mutation of static variables, Rust requires explicit synchronization mechanisms (`RwLock<>`, `Mutex<>`, `DashMap`, etc.) to ensure safe access to shared data.
 
 #### Reflection Subscriber-2
+
+1. **Have you explored files outside of the tutorial steps, such as `src/lib.rs`? If not, why? If yes, what did you learn from them?**  
+
+   Yes, but only briefly. From my understanding, `src/lib.rs` acts as the core module of the project. This file includes essential elements like crate and module imports, the `AppConfig` structure, and error handling logic.  
+
+2. **Now that you've completed the tutorial and tested your notification system with multiple `Receiver` instances, how does the Observer pattern simplify adding more subscribers? Additionally, what challenges arise when running multiple instances of the Main app?**  
+
+   The Observer pattern makes adding new subscribers easy by allowing each instance of the Main app to manage its own set of subscribers efficiently. If multiple instances of the Main app need to broadcast changes to all subscribers, an inter-instance messaging system would be needed. However, adding subscribers across different app instances can still be handled smoothly by making HTTP requests to the appropriate API endpoints.  
+
+3. **Have you written your own tests or improved documentation in your Postman collection? If so, how useful were these features for your work (whether for the tutorial or a group project)?**  
+
+   Yes, and these features have been very useful. Writing tests helps ensure that the code functions correctly and prevents potential bugs. Enhancing documentation in Postman makes API usage clearer by outlining endpoints, required parameters, expected responses, and error handling details. Using Postman’s "Overview" tab is a great way to structure and present this information effectively.
